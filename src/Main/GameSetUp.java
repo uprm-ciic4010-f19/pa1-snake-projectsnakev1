@@ -45,6 +45,7 @@ public class GameSetUp implements Runnable {
     public State gameState;
     public State menuState;
     public State pauseState;
+    public State overState; // game over 
 
     //Res.music
     private InputStream audioFile;
