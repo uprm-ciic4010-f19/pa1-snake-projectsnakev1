@@ -19,7 +19,7 @@ public class Player {
 
     public int xCoord;
     public int yCoord;
-
+    public int speed=5;	//Added public variable for speed
     public int moveCounter;
 
     public String direction;//is your first name one?
@@ -37,7 +37,7 @@ public class Player {
 
     public void tick(){
         moveCounter++;
-        if(moveCounter>=2) {			// speed changed to 2
+        if(moveCounter>=speed) {			// speed changed to 2 - Changed for a variable wit the speed
             checkCollisionAndMove();
             moveCounter=0;
         }
@@ -51,8 +51,13 @@ public class Player {
             direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
         	State.setState(handler.getGame().pauseState);						// escape button for pause state
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ADD)) {
+        	//Add speed increase change
+        	speed--;
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SUBTRACT)) {
+        	//Add speed decrease change
+        	speed++;
         }
-
     }
 
     public void checkCollisionAndMove(){
