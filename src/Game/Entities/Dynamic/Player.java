@@ -16,7 +16,7 @@ public class Player {
     public int lenght;
     public boolean justAte;
     private Handler handler;
-
+    public double score;		// Public score variable
     public int xCoord;
     public int yCoord;
     public int speed = 5;	//Added public variable for speed
@@ -114,6 +114,9 @@ public class Player {
 
     public void render(Graphics g,Boolean[][] playeLocation){
         Random r = new Random();
+    	g.setColor(Color.BLACK);
+    	g.setFont(new Font("TimesRoman", Font.BOLD, 50));
+    	g.drawString("Score: " + String.valueOf(this.getScore()), 10, 750);
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.GREEN); // green color for body
@@ -126,6 +129,9 @@ public class Player {
                 }
 
             }
+        }
+        if(handler.getWorld().player.isJustAte() == true) {
+        	g.drawString("Score: " + String.valueOf(this.getScore()) , 400, 100);
         }
 
 
@@ -140,21 +146,27 @@ public class Player {
             case "Left":
                 if( handler.getWorld().body.isEmpty()){
                     if(this.xCoord!=handler.getWorld().GridWidthHeightPixelCount-1){
+                    	score += Math.sqrt(2*(score+1));
                         tail = new Tail(this.xCoord+1,this.yCoord,handler);
                     }else{
                         if(this.yCoord!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail = new Tail(this.xCoord,this.yCoord-1,handler);
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail =new Tail(this.xCoord,this.yCoord+1,handler);
                         }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().x!=handler.getWorld().GridWidthHeightPixelCount-1){
+                    	score += Math.sqrt(2*(score+1));
                         tail=new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler);
                     }else{
                         if(handler.getWorld().body.getLast().y!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler);
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler);
 
                         }
@@ -165,21 +177,27 @@ public class Player {
             case "Right":
                 if( handler.getWorld().body.isEmpty()){
                     if(this.xCoord!=0){
+                    	score += Math.sqrt(2*(score+1));
                         tail=new Tail(this.xCoord-1,this.yCoord,handler);
                     }else{
                         if(this.yCoord!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=new Tail(this.xCoord,this.yCoord-1,handler);
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=new Tail(this.xCoord,this.yCoord+1,handler);
                         }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().x!=0){
+                    	score += Math.sqrt(2*(score+1));
                         tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
                     }else{
                         if(handler.getWorld().body.getLast().y!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler));
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
                         }
                     }
@@ -189,21 +207,27 @@ public class Player {
             case "Up":
                 if( handler.getWorld().body.isEmpty()){
                     if(this.yCoord!=handler.getWorld().GridWidthHeightPixelCount-1){
+                    	score += Math.sqrt(2*(score+1));
                         tail=(new Tail(this.xCoord,this.yCoord+1,handler));
                     }else{
                         if(this.xCoord!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(this.xCoord+1,this.yCoord,handler));
                         }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().y!=handler.getWorld().GridWidthHeightPixelCount-1){
+                    	score += Math.sqrt(2*(score+1));
                         tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
                     }else{
                         if(handler.getWorld().body.getLast().x!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler));
                         }
                     }
@@ -213,21 +237,27 @@ public class Player {
             case "Down":
                 if( handler.getWorld().body.isEmpty()){
                     if(this.yCoord!=0){
+                    	score += Math.sqrt(2*(score+1));
                         tail=(new Tail(this.xCoord,this.yCoord-1,handler));
                     }else{
                         if(this.xCoord!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(this.xCoord+1,this.yCoord,handler));
                         } System.out.println("Tu biscochito");
                     }
                 }else{
                     if(handler.getWorld().body.getLast().y!=0){
+                    	score += Math.sqrt(2*(score+1));
                         tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler));
                     }else{
                         if(handler.getWorld().body.getLast().x!=0){
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
                         }else{
+                        	score += Math.sqrt(2*(score+1));
                             tail=(new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler));
                         }
                     }
@@ -256,5 +286,13 @@ public class Player {
 
     public void setJustAte(boolean justAte) {
         this.justAte = justAte;
+    }
+    
+    public double getScore() {
+		return score;
+	}
+    
+    public void setCore(double score) {
+    	this.score = score;
     }
 }
