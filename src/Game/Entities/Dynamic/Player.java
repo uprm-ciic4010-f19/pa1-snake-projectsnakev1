@@ -147,26 +147,32 @@ public class Player {
                 if( handler.getWorld().body.isEmpty()){
                     if(this.xCoord!=handler.getWorld().GridWidthHeightPixelCount-1){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1); 
                         tail = new Tail(this.xCoord+1,this.yCoord,handler);
                     }else{
                         if(this.yCoord!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail = new Tail(this.xCoord,this.yCoord-1,handler);
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail =new Tail(this.xCoord,this.yCoord+1,handler);
                         }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().x!=handler.getWorld().GridWidthHeightPixelCount-1){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1); 
                         tail=new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler);
                     }else{
                         if(handler.getWorld().body.getLast().y!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler);
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1); 
                             tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler);
 
                         }
@@ -178,26 +184,32 @@ public class Player {
                 if( handler.getWorld().body.isEmpty()){
                     if(this.xCoord!=0){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1); 
                         tail=new Tail(this.xCoord-1,this.yCoord,handler);
                     }else{
                         if(this.yCoord!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=new Tail(this.xCoord,this.yCoord-1,handler);
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=new Tail(this.xCoord,this.yCoord+1,handler);
                         }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().x!=0){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1);
                         tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
                     }else{
                         if(handler.getWorld().body.getLast().y!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler));
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
                         }
                     }
@@ -208,26 +220,32 @@ public class Player {
                 if( handler.getWorld().body.isEmpty()){
                     if(this.yCoord!=handler.getWorld().GridWidthHeightPixelCount-1){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1);
                         tail=(new Tail(this.xCoord,this.yCoord+1,handler));
                     }else{
                         if(this.xCoord!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(this.xCoord+1,this.yCoord,handler));
                         }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().y!=handler.getWorld().GridWidthHeightPixelCount-1){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1);
                         tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
                     }else{
                         if(handler.getWorld().body.getLast().x!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler));
                         }
                     }
@@ -238,26 +256,32 @@ public class Player {
                 if( handler.getWorld().body.isEmpty()){
                     if(this.yCoord!=0){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1);
                         tail=(new Tail(this.xCoord,this.yCoord-1,handler));
                     }else{
                         if(this.xCoord!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1);
                             tail=(new Tail(this.xCoord+1,this.yCoord,handler));
                         } System.out.println("Tu biscochito");
                     }
                 }else{
                     if(handler.getWorld().body.getLast().y!=0){
                     	score += Math.sqrt(2*(score+1));
+                    	speed -= (6 + 1);
                         tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler));
                     }else{
                         if(handler.getWorld().body.getLast().x!=0){
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1); 
                             tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
                         }else{
                         	score += Math.sqrt(2*(score+1));
+                        	speed -= (6 + 1); 
                             tail=(new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler));
                         }
                     }
