@@ -19,7 +19,7 @@ public class Player {
     public double score;		// Public score variable
     public int xCoord;
     public int yCoord;
-    public int speed = 5;	//Added public variable for speed
+    public int speed = 7;	//Added public variable for speed
     public int moveCounter;
 
     public String direction;//is your first name one?
