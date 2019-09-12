@@ -42,13 +42,17 @@ public class Player {
             moveCounter=0;
         }
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
-            direction="Up";
+            if(direction != "Down" || lenght == 1)						// No Backtracking
+        	direction="Up";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
-            direction="Down";
+            if(direction != "Up" || lenght == 1)						//No Backtracking
+        	direction="Down";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
-            direction="Left";
+            if(direction != "Right" || lenght == 1)						//No Backtracking
+        	direction="Left";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
-            direction="Right";
+            if(direction != "Left" || lenght == 1)						//No Backtracking
+        	direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
         	State.setState(handler.getGame().pauseState);						// escape button for pause state
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ADD)) {
@@ -57,7 +61,10 @@ public class Player {
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SUBTRACT)) {
         	//Added speed decrease change
         	speed++;
-        }
+        } 
+       
+        
+        
     }
 
     public void checkCollisionAndMove(){
@@ -98,6 +105,11 @@ public class Player {
                 break;
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
+        for(int snakeBodyLenght = 0; snakeBodyLenght < handler.getWorld().body.size(); snakeBodyLenght++) {
+        if((xCoord == handler.getWorld().body.get(snakeBodyLenght).x) && yCoord == handler.getWorld().body.get(snakeBodyLenght).y) {
+        	kill();
+        }
+       }
 
 
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
@@ -108,6 +120,7 @@ public class Player {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
+            
         }
 
     }
