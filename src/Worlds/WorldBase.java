@@ -24,12 +24,12 @@ public abstract class WorldBase {
     public int GridPixelsize;
 
     public Player player;
-
+    
     protected Handler handler;
 
 
     public Boolean appleOnBoard;
-    protected Apple apple;
+    public Apple apple;
     public Boolean[][] appleLocation;
 
 

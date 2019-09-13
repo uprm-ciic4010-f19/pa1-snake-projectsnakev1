@@ -1,4 +1,5 @@
 package Game.Entities.Static;
+import java.awt.Color;
 
 import Main.Handler;
 
