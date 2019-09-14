@@ -23,7 +23,8 @@ public class Player {
 	public int speed = 7;	//Added public variable for speed
 	public int moveCounter;
 	public Apple apple;
-
+	public int steps;
+	private boolean removed;
 	public String direction;//is your first name one?
 
 	public Player(Handler handler){
@@ -39,6 +40,7 @@ public class Player {
 
 	public void tick(){
 		moveCounter++;
+		steps++;
 		if(moveCounter>=speed) {			// speed changed to 2 - Changed for a public variable with the speed
 			checkCollisionAndMove();
 			moveCounter=0;
@@ -63,7 +65,7 @@ public class Player {
 		}if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_SUBTRACT)) {
 			//Added speed decrease change
 			speed++;
-		} 
+		}
 
 
 
@@ -112,27 +114,18 @@ public class Player {
 				kill();
 			}
 		}
-
-
 		if(handler.getWorld().appleLocation[xCoord][yCoord]){
 			Eat();
 		}
-
 		if(!handler.getWorld().body.isEmpty()) {
 			handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
 			handler.getWorld().body.removeLast();
 			handler.getWorld().body.addFirst(new Tail(x, y,handler));
-
 		}
-//		if(handler.getWorld().apple.goodApple == true && handler.getWorld().body.size() != 1) {
-//			handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
-//			handler.getWorld().body.removeLast();
-//		}
 	}
 
 	public void render(Graphics g,Boolean[][] playeLocation){
 		Random r = new Random();
-//		int randomNumber = r.nextInt(10);
 		int counter = 0;
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("TimesRoman", Font.HANGING_BASELINE, 30));
@@ -141,14 +134,14 @@ public class Player {
 			for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
 				counter++;
 				if(playeLocation[i][j]){		//||handler.getWorld().appleLocation[i][j]
-					g.setColor(Color.green); // green color for body
+					g.setColor(Color.GREEN); // green color for body
 					g.fillRect((i*handler.getWorld().GridPixelsize),
 							(j*handler.getWorld().GridPixelsize),
 							handler.getWorld().GridPixelsize,
 							handler.getWorld().GridPixelsize);
 				}
-				if(handler.getWorld().appleLocation[i][j]) {
-					handler.getWorld().apple.goodApple = true;
+				if(counter % 5 != 0 && handler.getWorld().appleLocation[i][j]) {
+					handler.getWorld().apple.goodApple = false;
 					g.setColor(Color.RED);
 					g.fillRect((i*handler.getWorld().GridPixelsize),
 							(j*handler.getWorld().GridPixelsize),
@@ -156,7 +149,7 @@ public class Player {
 							handler.getWorld().GridPixelsize);
 				}
 				if(counter % 5 == 0 && handler.getWorld().appleLocation[i][j]) {
-					handler.getWorld().apple.goodApple = false;
+					handler.getWorld().apple.goodApple = true;
 					g.setColor(Color.blue);
 					g.fillRect((i*handler.getWorld().GridPixelsize),
 							(j*handler.getWorld().GridPixelsize),
@@ -177,57 +170,73 @@ public class Player {
 		handler.getWorld().appleOnBoard=false;
 		switch (direction){
 		case "Left":
-			if( handler.getWorld().body.isEmpty()){
-				if(this.xCoord!=handler.getWorld().GridWidthHeightPixelCount-1){
-					score += Math.sqrt(2*(score+1));
-					speed -= (6 + 1); 
-					tail = new Tail(this.xCoord+1,this.yCoord,handler);
-				}else{
-					if(this.yCoord!=0){
-						score += Math.sqrt(2*(score+1));
-						speed -= (6 + 1);
-						tail = new Tail(this.xCoord,this.yCoord-1,handler);
-					}else{
-						score += Math.sqrt(2*(score+1));
-						speed -= (6 + 1);
-						tail =new Tail(this.xCoord,this.yCoord+1,handler);
-					}
-				}
-			}else{
-				if(handler.getWorld().body.getLast().x!=handler.getWorld().GridWidthHeightPixelCount-1){
-					score += Math.sqrt(2*(score+1));
-					speed -= (6 + 1); 
-					tail=new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler);
-				}else{
-					if(handler.getWorld().body.getLast().y!=0){
-						score += Math.sqrt(2*(score+1));
-						speed -= (6 + 1);
-						tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler);
-					}else{
+				if(handler.getWorld().body.isEmpty()){
+					if(this.xCoord!=handler.getWorld().GridWidthHeightPixelCount-1){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1); 
-						tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler);
-
+						tail = new Tail(this.xCoord+1,this.yCoord,handler);
+					}else{
+						if(this.yCoord!=0){
+							score += Math.sqrt(2*(score+1));
+							speed -= (6 + 1);
+							tail = new Tail(this.xCoord,this.yCoord-1,handler);
+							
+						}else{
+							score += Math.sqrt(2*(score+1));
+							speed -= (6 + 1);
+							tail =new Tail(this.xCoord,this.yCoord+1,handler);	
+						}
 					}
-				}
+				}else{
+					if(handler.getWorld().body.getLast().x!=handler.getWorld().GridWidthHeightPixelCount-1){
+						score += Math.sqrt(2*(score+1));
+						speed -= (6 + 1); 
+						tail=new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler);
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
+						
+					}else{
+						if(handler.getWorld().body.getLast().y!=0){
+							score += Math.sqrt(2*(score+1));
+							speed -= (6 + 1);
+							tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler);
+							if(handler.getWorld().apple.goodApple == true) {
+								score -= Math.sqrt(2*(score+1));
+								speed += (10); 
+							}
+						}else{
+							score += Math.sqrt(2*(score+1));
+							speed -= (6 + 1); 
+							tail=new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler);
+							if(handler.getWorld().apple.goodApple == true) {
+								score -= Math.sqrt(2*(score+1));
+								speed += (10); 
+							}
+						}
+					}
 
-			}
+				}
 			break;
 		case "Right":
-			if( handler.getWorld().body.isEmpty()){
+			if(handler.getWorld().body.isEmpty()){
 				if(this.xCoord!=0){
 					score += Math.sqrt(2*(score+1));
 					speed -= (6 + 1); 
 					tail=new Tail(this.xCoord-1,this.yCoord,handler);
+					
 				}else{
 					if(this.yCoord!=0){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=new Tail(this.xCoord,this.yCoord-1,handler);
+						
 					}else{
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=new Tail(this.xCoord,this.yCoord+1,handler);
+						
 					}
 				}
 			}else{
@@ -235,15 +244,27 @@ public class Player {
 					score += Math.sqrt(2*(score+1));
 					speed -= (6 + 1);
 					tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
+					if(handler.getWorld().apple.goodApple == true) {
+						score -= Math.sqrt(2*(score+1));
+						speed += (10); 
+					}
 				}else{
 					if(handler.getWorld().body.getLast().y!=0){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler));
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
 					}else{
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
 					}
 				}
 
@@ -255,15 +276,18 @@ public class Player {
 					score += Math.sqrt(2*(score+1));
 					speed -= (6 + 1);
 					tail=(new Tail(this.xCoord,this.yCoord+1,handler));
+					
 				}else{
 					if(this.xCoord!=0){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(this.xCoord-1,this.yCoord,handler));
+						
 					}else{
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(this.xCoord+1,this.yCoord,handler));
+						
 					}
 				}
 			}else{
@@ -271,15 +295,27 @@ public class Player {
 					score += Math.sqrt(2*(score+1));
 					speed -= (6 + 1);
 					tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord+1,handler));
+					if(handler.getWorld().apple.goodApple == true) {
+						score -= Math.sqrt(2*(score+1));
+						speed += (10); 
+					}
 				}else{
 					if(handler.getWorld().body.getLast().x!=0){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
 					}else{
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler));
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
 					}
 				}
 
@@ -291,15 +327,18 @@ public class Player {
 					score += Math.sqrt(2*(score+1));
 					speed -= (6 + 1);
 					tail=(new Tail(this.xCoord,this.yCoord-1,handler));
+					
 				}else{
 					if(this.xCoord!=0){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(this.xCoord-1,this.yCoord,handler));
+						
 					}else{
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1);
 						tail=(new Tail(this.xCoord+1,this.yCoord,handler));
+						
 					} System.out.println("Tu biscochito");
 				}
 			}else{
@@ -307,15 +346,27 @@ public class Player {
 					score += Math.sqrt(2*(score+1));
 					speed -= (6 + 1);
 					tail=(new Tail(handler.getWorld().body.getLast().x,this.yCoord-1,handler));
+					if(handler.getWorld().apple.goodApple == true) {
+						score -= Math.sqrt(2*(score+1));
+						speed += (10); 
+					}
 				}else{
 					if(handler.getWorld().body.getLast().x!=0){
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1); 
 						tail=(new Tail(handler.getWorld().body.getLast().x-1,this.yCoord,handler));
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
 					}else{
 						score += Math.sqrt(2*(score+1));
 						speed -= (6 + 1); 
 						tail=(new Tail(handler.getWorld().body.getLast().x+1,this.yCoord,handler));
+						if(handler.getWorld().apple.goodApple == true) {
+							score -= Math.sqrt(2*(score+1));
+							speed += (10); 
+						}
 					}
 				}
 
